@@ -17,6 +17,11 @@ import PlayersScreen from '@/screens/PlayersScreen';
 import LeaguesScreen from '@/screens/LeaguesScreen';
 import AdminScreen from '@/screens/AdminScreen';
 import { TestDataScreen } from '@/screens/TestDataScreen';
+import { DataReportScreen } from '@/screens/DataReportScreen';
+import { TableManagerScreen } from '@/screens/TableManagerScreen';
+import { RealDataTestScreen } from '@/screens/RealDataTestScreen';
+import WebTestScreen from '@/screens/WebTestScreen';
+import SyncTestScreen from '@/screens/SyncTestScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator<RootStackParamList>();
@@ -225,6 +230,46 @@ const MoreStack = () => {
         component={TestDataScreen}
         options={{
           title: 'Database Test',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="DataReport"
+        component={DataReportScreen}
+        options={{
+          title: 'Veri Raporu',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="TableManager"
+        component={TableManagerScreen}
+        options={{
+          title: 'Tablo Yöneticisi',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="RealDataTest"
+        component={RealDataTestScreen}
+        options={{
+          title: 'Gerçek Veri Testi',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="WebTest"
+        component={WebTestScreen}
+        options={{
+          title: 'Web Platform Test',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="SyncTest"
+        component={SyncTestScreen}
+        options={{
+          title: 'Sync System Test',
           headerBackTitleVisible: false,
         }}
       />

@@ -331,6 +331,22 @@ export class ApiFootballService {
     return apiFootballClient.getFixtures({ date: today });
   }
 
+  static async fetchStandings(league: number, season: number) {
+    return apiFootballClient.getStandings({ league, season });
+  }
+
+  static async fetchPlayers(params: { team?: number; league?: number; season?: number; search?: string } = {}) {
+    return apiFootballClient.getPlayers(params);
+  }
+
+  static async fetchOdds(params: { fixture?: number; league?: number; season?: number; bet?: number } = {}) {
+    return apiFootballClient.getOdds(params);
+  }
+
+  static async fetchPredictions(fixtureId: number) {
+    return apiFootballClient.getPredictions(fixtureId);
+  }
+
   static async getAPIStatus() {
     return apiFootballClient.getStatus();
   }

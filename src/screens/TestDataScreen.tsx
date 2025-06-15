@@ -26,11 +26,22 @@ export const TestDataScreen: React.FC = () => {
   const tables = [
     'countries',
     'leagues',
+    'seasons',
     'venues',
     'teams',
+    'players',
+    'team_squads',
     'fixtures',
+    'fixture_events',
     'league_standings',
-    'predictions'
+    'team_statistics',
+    'player_statistics',
+    'bookmakers',
+    'odds',
+    'predictions',
+    'transfers',
+    'coaches',
+    'data_sync_logs'
   ];
 
   const checkAllTables = async () => {

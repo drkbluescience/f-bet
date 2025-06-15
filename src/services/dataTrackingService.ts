@@ -16,10 +16,12 @@ export interface DataSyncLog {
 export interface DailyDataSummary {
   date: string;
   total_records_added: number;
+  total_records_updated: number;
   total_api_calls: number;
   tables_synced: number;
   sync_sessions: number;
   success_rate: number;
+  avg_sync_duration: number;
 }
 
 export class DataTrackingService {
@@ -67,20 +69,24 @@ export class DataTrackingService {
         return {
           date,
           total_records_added: 0,
+          total_records_updated: 0,
           total_api_calls: 0,
           tables_synced: 0,
           sync_sessions: 0,
           success_rate: 0,
+          avg_sync_duration: 0,
         };
       }
 
       const summary: DailyDataSummary = {
         date,
         total_records_added: data.reduce((sum, log) => sum + (log.records_added || 0), 0),
+        total_records_updated: data.reduce((sum, log) => sum + (log.records_updated || 0), 0),
         total_api_calls: data.reduce((sum, log) => sum + (log.api_calls_used || 0), 0),
         tables_synced: new Set(data.map(log => log.table_name)).size,
         sync_sessions: data.length,
         success_rate: (data.filter(log => log.status === 'success').length / data.length) * 100,
+        avg_sync_duration: data.reduce((sum, log) => sum + (log.sync_duration_ms || 0), 0) / data.length,
       };
 
       return summary;
@@ -120,6 +126,29 @@ export class DataTrackingService {
       return data || [];
     } catch (error) {
       console.error('Error getting sync logs:', error);
+      return [];
+    }
+  }
+
+  /**
+   * Get recent sync logs
+   */
+  static async getRecentLogs(limit: number = 20): Promise<DataSyncLog[]> {
+    try {
+      const { data, error } = await supabase
+        .from('data_sync_logs')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(limit);
+
+      if (error) {
+        console.error('Failed to get recent logs:', error);
+        return [];
+      }
+
+      return data || [];
+    } catch (error) {
+      console.error('Error getting recent logs:', error);
       return [];
     }
   }

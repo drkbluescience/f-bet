@@ -33,6 +33,7 @@ export const COLORS = {
   surface: '#F8F9FA',
   card: '#FFFFFF',
   errorBackground: '#FFF5F5',
+  primaryLight: '#E3F2FD',
 
   // Border colors
   border: '#E5E5E7',
@@ -71,6 +72,57 @@ export const TYPOGRAPHY = {
     tight: 1.2,
     normal: 1.4,
     relaxed: 1.6,
+  },
+  // Pre-defined text styles
+  h1: {
+    fontSize: 32,
+    fontWeight: '700' as const,
+    lineHeight: 1.2,
+  },
+  h2: {
+    fontSize: 24,
+    fontWeight: '600' as const,
+    lineHeight: 1.3,
+  },
+  h3: {
+    fontSize: 20,
+    fontWeight: '600' as const,
+    lineHeight: 1.4,
+  },
+  h4: {
+    fontSize: 18,
+    fontWeight: '500' as const,
+    lineHeight: 1.4,
+  },
+  body: {
+    fontSize: 16,
+    fontWeight: '400' as const,
+    lineHeight: 1.5,
+  },
+  bodySmall: {
+    fontSize: 14,
+    fontWeight: '400' as const,
+    lineHeight: 1.4,
+  },
+  subtitle: {
+    fontSize: 16,
+    fontWeight: '500' as const,
+    lineHeight: 1.4,
+  },
+  caption: {
+    fontSize: 12,
+    fontWeight: '400' as const,
+    lineHeight: 1.3,
+  },
+  button: {
+    fontSize: 16,
+    fontWeight: '600' as const,
+    lineHeight: 1.2,
+  },
+  buttonSmall: {
+    fontSize: 14,
+    fontWeight: '500' as const,
+    lineHeight: 1.2,
   },
 };
 

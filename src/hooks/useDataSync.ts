@@ -231,27 +231,76 @@ export const useDataSync = () => {
     testConnections();
   }, [testConnections]);
 
+  // Additional sync methods
+  const syncVenues = useCallback(async (params: { country?: string; city?: string; search?: string } = {}) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const result = await DataSyncService.syncVenues(params);
+      queryClient.invalidateQueries(['venues']);
+      return result;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setError(errorMessage);
+      return { synced: 0, errors: 1 };
+    } finally {
+      setIsLoading(false);
+      updateSyncStatus();
+    }
+  }, [queryClient]);
+
+  const syncAllTables = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const result = await DataSyncService.syncAllTables();
+
+      if (result.success) {
+        // Invalidate all queries to refresh data
+        queryClient.invalidateQueries();
+        console.log('✅ Comprehensive data sync completed successfully');
+      } else {
+        setError(result.message);
+        console.error('❌ Comprehensive data sync failed:', result.message);
+      }
+
+      return result;
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setError(errorMessage);
+      console.error('❌ Comprehensive data sync error:', error);
+      return { success: false, message: errorMessage, details: {} };
+    } finally {
+      setIsLoading(false);
+      updateSyncStatus();
+    }
+  }, [queryClient]);
+
   return {
     // Status
     syncStatus,
     connectionStatus,
     isLoading,
     error,
-    
+
     // Actions
     testConnections,
     syncAll,
+    syncAllTables,
     syncCountries,
     syncLeagues,
     syncTeams,
     syncFixtures,
     syncLiveFixtures,
     syncTodayFixtures,
-    
+    syncVenues,
+
     // Utilities
     shouldSync,
     updateSyncStatus,
-    
+
     // Computed values
     isConnected: connectionStatus.supabase.success && connectionStatus.apiFootball.success,
     canSync: connectionStatus.supabase.success && connectionStatus.apiFootball.success && !syncStatus.isRunning,

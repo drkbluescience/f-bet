@@ -193,6 +193,9 @@ export type RootStackParamList = {
   Leagues: undefined;
   Admin: undefined;
   TestData: undefined;
+  DataReport: undefined;
+  TableManager: undefined;
+  RealDataTest: undefined;
 };
 
 // API Response types

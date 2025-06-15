@@ -19,6 +19,7 @@ import { ErrorDisplay } from '@/components/ErrorBoundary';
 import FixtureCard from '@/components/FixtureCard';
 import DataUsageStats from '@/components/DataUsageStats';
 import SimpleTest from '@/components/SimpleTest';
+import { DashboardStats } from '@/components/DashboardStats';
 import { testSupabaseConnection } from '@/utils/testSupabase';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -128,6 +129,9 @@ const HomeScreen: React.FC = () => {
           Your AI-powered football betting companion
         </Text>
       </View>
+
+      {/* Dashboard Stats */}
+      <DashboardStats onRefresh={handleRefresh} />
 
       {/* Live Matches Section */}
       {liveFixtures && liveFixtures.length > 0 && (

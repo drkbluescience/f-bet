@@ -18,6 +18,9 @@
     "type-check": "tsc --noEmit",
     "sync:all": "node -e \"require('./src/services/dataSyncService.ts').DataSyncService.syncAll().then(r => console.log(r))\"",
     "sync:today": "node -e \"require('./src/services/dataSyncService.ts').DataSyncService.syncTodayFixtures().then(r => console.log(r))\"",
+    "scheduler:start": "node -e \"require('./src/services/schedulerService.ts').schedulerService.start().then(() => console.log('Scheduler started'))\"",
+    "scheduler:stop": "node -e \"require('./src/services/schedulerService.ts').schedulerService.stop().then(() => console.log('Scheduler stopped'))\"",
+    "scheduler:status": "node -e \"console.log(require('./src/services/schedulerService.ts').schedulerService.getJobStatus())\"",
     "db:create": "node src/scripts/createTablesSimple.js",
     "db:sync": "node src/scripts/syncDataSimple.js",
     "db:setup": "npm run db:create && npm run db:sync",
@@ -32,6 +35,8 @@
   "dependencies": {
     "@craftzdog/react-native-buffer": "^6.1.0",
     "@expo/vector-icons": "^13.0.0",
+    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-picker/picker": "2.4.10",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",

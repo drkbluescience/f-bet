@@ -386,6 +386,20 @@ CREATE TABLE IF NOT EXISTS team_coaches (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
+-- Data sync logs table for tracking data synchronization operations
+CREATE TABLE IF NOT EXISTS data_sync_logs (
+    id SERIAL PRIMARY KEY,
+    table_name VARCHAR(100) NOT NULL,
+    sync_date DATE NOT NULL,
+    records_added INTEGER DEFAULT 0,
+    records_updated INTEGER DEFAULT 0,
+    api_calls_used INTEGER DEFAULT 0,
+    sync_duration_ms INTEGER DEFAULT 0,
+    status VARCHAR(20) DEFAULT 'success',
+    error_message TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_fixtures_date ON fixtures(date);
 CREATE INDEX IF NOT EXISTS idx_fixtures_league_season ON fixtures(league_id, season_year);
@@ -396,6 +410,9 @@ CREATE INDEX IF NOT EXISTS idx_team_statistics_team_league_season ON team_statis
 CREATE INDEX IF NOT EXISTS idx_player_statistics_player_season ON player_statistics(player_id, season_year);
 CREATE INDEX IF NOT EXISTS idx_odds_fixture ON odds(fixture_id);
 CREATE INDEX IF NOT EXISTS idx_predictions_fixture ON predictions(fixture_id);
+CREATE INDEX IF NOT EXISTS idx_data_sync_logs_table_date ON data_sync_logs(table_name, sync_date);
+CREATE INDEX IF NOT EXISTS idx_data_sync_logs_date ON data_sync_logs(sync_date);
+CREATE INDEX IF NOT EXISTS idx_data_sync_logs_created_at ON data_sync_logs(created_at);
 
 -- Create updated_at trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
